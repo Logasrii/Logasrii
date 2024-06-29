@@ -1,22 +1,22 @@
-# we need 2 helper mappings, from letters to ints and the inverse
-L2I = dict(zip("ABCDEFGHIJKLMNOPQRSTUVWXYZ",range(26)))
-I2L = dict(zip(range(26),"ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
+def caesar_cipher(text, shift):
+    result = ""
+    
+    for char in text:
+        if char.isalpha():
+            shift_amount = shift % 26
+            if char.islower():
+                start = ord('a')
+                result += chr((ord(char) - start + shift_amount) % 26 + start)
+            elif char.isupper():
+                start = ord('A')
+                result += chr((ord(char) - start + shift_amount) % 26 + start)
+        else:
+            result += char
+            
+    return result
 
-key = 3
-plaintext = "DEFEND THE EAST WALL OF THE CASTLE"
-
-# encipher
-ciphertext = ""
-for c in plaintext.upper():
-    if c.isalpha(): ciphertext += I2L[ (L2I[c] + key)%26 ]
-    else: ciphertext += c
-
-# decipher
-plaintext2 = ""
-for c in ciphertext.upper():
-    if c.isalpha(): plaintext2 += I2L[ (L2I[c] - key)%26 ]
-    else: plaintext2 += c
-
-print plaintext
-print ciphertext
-print plaintext2
+# Example usage
+text = "Hello, World!"
+shift = 3
+encrypted_text = caesar_cipher(text, shift)
+print(f"Encrypted Text: {encrypted_text}")
